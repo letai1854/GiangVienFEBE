@@ -6,7 +6,7 @@ class Db
        public function connect(){
         if(!isset(self::$connection)){
             $config=parse_ini_file("config.ini");
-            self::$connection = new mysqli("localhost", "root", "", "test");
+            self::$connection = new mysqli(hostname:"b1wnetyyuqfx5xjegzhd-mysql.services.clever-cloud.com", username:"urkrjkqfvitvhj6v", password:"kx3JKNnuSNFrFlcisDHY", database:"b1wnetyyuqfx5xjegzhd",port:"3306");
 
         }
         if(self::$connection==false){

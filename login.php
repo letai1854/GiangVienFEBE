@@ -1,4 +1,29 @@
+<?php
+session_start(); // Khởi đầu session
+require_once('Config/db.class.php');
+require_once('entities/account.php');
+if (isset($_POST['btnlogin'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+            try {
+                $result=User::checkLogin($email,$password);
 
+                if ($result->num_rows === 1) {
+                    $_SESSION['username'] = $email;
+                    header("Location: TrangChu.php");
+                    exit();
+                } else {
+                    $error_message="Sai tài khoản hoặc mật khẩu";
+                    
+                }
+              
+            } catch (Exception $e) {
+                echo "<p class='error'>Lỗi: " . $e->getMessage() . "</p>";
+            }
+        }
+
+
+?>
 
 
 
@@ -19,7 +44,7 @@
         }
         body{
            
-            background-image: url('./image/background.jpg') ;
+            background-image: url('images/bg_1.avif') ;
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -69,6 +94,11 @@
                     
                     
                     </div>
+                    <?php 
+                    if(isset($error_message)){
+                        echo "<p class='errorMessage my-3'>$error_message</p>";
+                    }
+                    ?>
                     <div class="d-none errorMessage my-3">Please enter your email address</div>
 
                     <button class="btnLogin mt-2 login" type="submit" class="btn"  name="btnlogin">Đăng nhập</button>

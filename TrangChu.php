@@ -1,3 +1,20 @@
+<?php
+require_once('entities/account.php');
+require_once('entities/subject.class.php');
+session_start();
+if(isset($_SESSION['username'])){
+  $userName=user::get_teacherName($_SESSION['username']);
+  $owner=true;
+}
+else{
+  $owner=false;
+}
+
+	$list_subject = Detail::list_Subject();
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,41 +48,49 @@
   </div>
         <nav class="navbar navbar-expand-lg   py-3 ">
             <div class="container">
-        
+              <?php
+               if($owner){
+              echo '<p>'. $userName.'</p>';
+               }
+              ?>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span id="bar" class="fas fa-bars"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
+                 <?php
+                if($owner){
+                  echo' <li class="nav-item">
+                  <a class="nav-link" href="./themmonhoc.html" >Thêm môn học</a>
+                </li>
+       
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./capnhatthongtin.html">
+                    Thêm thông tin
+                  </a>
+                  <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="./themgiangvien.html" >Giảng viên</a></li>
+                    <li><a class="dropdown-item" href="./capnhatthongtin.html">Thông Tin</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cập nhật thông tin
+                  </a>
+                  <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="./themgiangvien.html"  >Giảng viên</a></li>
+                    <li><a class="dropdown-item" href="./Thongbaochinhsua.html">Thông báo-Tin tức</a></li>
+                    <li><a class="dropdown-item" href="./suaViecLam.html">Thông tin việc làm</a></li>
+                  </ul>
+                </li>';
+                }
+                 ?>
                   <li class="nav-item">
-                    <a class="nav-link" href="./themmonhoc.html" >Thêm môn học</a>
-                  </li>
-         
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./capnhatthongtin.html">
-                      Thêm thông tin
-                    </a>
-                    <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="./themgiangvien.html" >Giảng viên</a></li>
-                      <li><a class="dropdown-item" href="./capnhatthongtin.html">Thông Tin</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Cập nhật thông tin
-                    </a>
-                    <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="./themgiangvien.html"  >Giảng viên</a></li>
-                      <li><a class="dropdown-item" href="./Thongbaochinhsua.html">Thông báo-Tin tức</a></li>
-                      <li><a class="dropdown-item" href="./suaViecLam.html">Thông tin việc làm</a></li>
-                    </ul>
-                  </li>
-                  <!-- <li class="nav-item">
                     <a class="nav-link" >Liên hệ</a>
-                  </li> -->
+                  </li>
                   
                   <li class="nav-item">
-                    <a class="nav-link"  href="./login.html"><i class="fas fa-user" ></i></a>              </li>
+                    <a class="nav-link"  href="./login.php"><i class="fas fa-user" ></i></a>              </li>
                 </ul>
               </div>
             </div>
@@ -219,7 +244,7 @@
                       </div>
                       
                       <button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn">Sửa</button>
-          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn">Xóa</button>
+          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn"><a href="themTaiLieu.php?">Xóa</a> </button>
         
               <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
                 <a style="color: white; text-decoration: none; width:150px">Thêm</a>
@@ -227,6 +252,31 @@
                     </div>
                   </div>
                 </div>
+                <?php
+                if(isset($list_subject)){
+                  if(is_array($list_subject)){
+                    foreach($list_subject as $item){
+                      echo '<div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
+                      <div class="card shadow-sm"> 
+                        <img src="'.htmlspecialchars($item['subjectImage']).'" alt="">
+                        <div class="card-body">
+                          <p class="card-text text-center" style="color: blue;">'.htmlspecialchars($item['subjectName']).'</p>
+                      ';
+                        if($owner){
+                          echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn">Sửa</button>
+                          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn">Xóa</button>
+                        
+                              <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
+                                <a style="color: white; text-decoration: none; width:150px"><a href="themTaiLieu.php?sid=<?php echo '.$item['subjectCode'].' ?>">Xóa</a></a>
+                            </button>   </div>
+                  </div>
+                </div>';
+                        }
+                    }
+                  }
+                }
+                
+                ?>
 
                 
                 

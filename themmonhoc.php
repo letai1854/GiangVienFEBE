@@ -1,3 +1,22 @@
+<?php
+require_once("entities/subject.class.php");
+if(isset($_POST['btnSubmit'])){
+  $subjectName=$_POST['name'];
+	$txt_image=$_FILES['image'];
+  $newSubject=new Detail($subjectName,$txt_image);
+  $result=$newSubject->save();
+  if(isset($result)){
+		if(!$result){
+			echo '<script>alert("không thêm được!")</script>';
+			$again = true;
+		}
+		else{
+			echo '<script>alert("Thêm thành công!")</script>';
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,22 +55,18 @@
         <div class="col-xl-9 col-md-6 col-12">
           <div class="container ">
             <h2 class="text-center" style="color: rgba(255, 21, 4, 0.966);">Thêm Môn Học</h2>
-            <form action="#" method="post" class="formSubject">
+            <form action="#" method="post" class="formSubject" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="name">Tên môn học:</label>
                 <input type="text" id="name" name="name" class="form-control">
               </div>
               <div class="form-group">
-                <label for="publish_date">Ngày đăng:</label>
-                <input type="date" id="publish_date" name="publish_date" class="form-control">
-              </div>
-              <div class="form-group">
                 <label for="image">Chọn ảnh môn học:</label>
-                <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
+                <input type="file" name="image" id="txt_image" accept=".PNG,.GIF,.JPG,.JPEG,.jpg,.png,.jpeg"  >						
               </div>
                             
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                <button type="submit" class="btn btn-primary" name="btnSubmit">Xác nhận</button>
               </div>
             </form>
           </div>

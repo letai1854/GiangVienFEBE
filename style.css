@@ -227,7 +227,7 @@ margin-left: 10px;
     border: 1px solid rgba(3, 11, 246, 0.145);
     border-radius: 3px;
     padding: 10px 15px;
-    background-color: #007bff3e;
+    background-color: #4b4d4f2d;
 }
 .pct{
     display: flex;
@@ -247,4 +247,10 @@ margin-left: 10px;
 }
 .ct{
     margin-bottom: 50px;
+}
+
+body > nav > div > p{
+    color: red;
+    margin-top: 3px;
+    font-weight: 400;
 }

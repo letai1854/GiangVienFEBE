@@ -1,19 +1,19 @@
 <?php
-require_once("entites/chitiet.class.php");
-if(isset($_POST["submit"])){
-$ten=$_POST["editor"];
-$newchitiet= new Chitiet($ten);
-$result=$newchitiet->save();
-if(isset($result)){
-    if(!$result){
-        echo "that bai";
-    }
-    else{
-        echo "thanh cong";
-    }
+// require_once("entites/chitiet.class.php");
+// if(isset($_POST["submit"])){
+// $ten=$_POST["editor"];
+// $newchitiet= new Chitiet($ten);
+// $result=$newchitiet->save();
+// if(isset($result)){
+//     if(!$result){
+//         echo "that bai";
+//     }
+//     else{
+//         echo "thanh cong";
+//     }
 
-}
-}
+// }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -52,10 +52,10 @@ if(isset($result)){
         });
     </script>
    <?php 
-   $ct=Chitiet::list_Chitiet();
-   foreach($ct as $item){
-    echo $item["Ten"];
-}
+//    $ct=Chitiet::list_Chitiet();
+//    foreach($ct as $item){
+//     echo $item["Ten"];
+// }
    
    ?>
 </body>
