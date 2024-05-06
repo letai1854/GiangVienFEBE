@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+ 
+    <style>
+        /* CSS cho phần message */
+        #message {
+            margin-top: 20px;
+        }
+        #text-area {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="logo">
+          <div>    <img src="./logo.png" alt="Logo"></div>
+              
+                <div><h2 style="margin-left: 6px;">ĐẠI HỌC <br> TÔN ĐỨC THẮNG</h2>
+                  <h4 style="margin-left: 6px;">KHOA CÔNG NGHỆ THÔNG TIN</h4>
+                </div>
+            </div>
+      </div>
+      <div class="titleh1">
+
+        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">CẬP NHẬT THÔNG TIN</h1>
+
+      </div>
+      <hr style="color: red; border-top: 2px solid red; font-weight: bold;"> </p></div>
+   <div class="container ct">
+    <div class="text-center" style="font-size: 1.8rem;font-weight: bold; color:rgba(255, 0, 0, 0.793); "><p>Thông tin<br>
+    </div>
+<div class="formSubject form1">
+    <div class="category">
+        <label for="heading" >Tiêu đề:</label>
+    <input type="text" id="heading"><br>
+    </div>
+    <div >
+        <label for="job-type" style="margin-right: 26px;" >Loại:</label>
+        <select id="job-type" >
+            <option value="vieclam">Việc làm</option>
+            <option value="thongbao">Thông báo</option>
+            <option value="tintuc">Tin tức</option>
+        </select>
+    </div>
+<br><br>
+    <div id="message">
+        <button onclick="changeFontSize() "  style="    border-radius: 4px;
+        ">Font size</button>
+        <button onclick="changeFontColor()" style="    border-radius: 4px;
+        ">Color</button>
+        <button onclick="changeFontStyle('italic')" style="width: 40px;     border-radius: 4px;
+        " >I</button>
+        <button onclick="changeFontStyle('bold')" style="width: 40px;     border-radius: 4px;
+        " >B</button>
+        <button onclick="underlineText()" style="width: 40px;     border-radius: 4px;
+        " >U</button>
+        <button onclick="alignText('left')" style="width: 40px;     border-radius: 4px;
+        " ><i class="fas fa-align-left"></i></button>
+        <button onclick="alignText('center')" style="width: 40px;     border-radius: 4px;
+        " ><i class="fas fa-align-justify"></i></button>
+        <button onclick="alignText('right')" style="width: 40px;     border-radius: 4px;
+        " ><i class="fas fa-align-right"></i></button>
+        <button onclick="addImage()" style="    border-radius: 4px;
+        "><i class="fas fa-image     border-radius: 4px;
+            "></i> Chèn ảnh</button>
+<button onclick="addLink()" style="    border-radius: 4px;
+"><i class="fas fa-link     border-radius: 4px;
+    "></i> Chèn liên kết</button><br>
+
+        <textarea id="text-area" placeholder="Nhập văn bản" style="width:700px"></textarea>
+    </div>
+    <button onclick="submitData()" class="" style="background-color:green; color:aliceblue;  padding:2px; border-radius:4px">Xác nhận</button>
+
+    <script>
+        function changeFontSize() {
+            var size = prompt("Nhập cỡ chữ (px):");
+            document.getElementById("text-area").style.fontSize = size + "px";
+        }
+
+        function changeFontColor() {
+            var color = prompt("Nhập mã màu (ví dụ: #ff0000):");
+            document.getElementById("text-area").style.color = color;
+        }
+
+        function changeFontStyle(style) {
+            var textarea = document.getElementById("text-area");
+            if (style === "italic") {
+                textarea.style.fontStyle = textarea.style.fontStyle === "italic" ? "normal" : "italic";
+            } else if (style === "bold") {
+                textarea.style.fontWeight = textarea.style.fontWeight === "bold" ? "normal" : "bold";
+            }
+        }
+
+        function underlineText() {
+            var textarea = document.getElementById("text-area");
+            textarea.style.textDecoration = textarea.style.textDecoration === "underline" ? "none" : "underline";
+        }
+
+        function alignText(align) {
+            document.getElementById("text-area").style.textAlign = align;
+        }
+
+        function addImage() {
+            var url = prompt("Nhập URL của ảnh:");
+            var imgTag = "<img src='" + url + "' alt=''>";
+            document.getElementById("text-area").value += imgTag;
+        }
+
+        function addLink() {
+            var url = prompt("Nhập URL của liên kết:");
+            var text = prompt("Nhập văn bản của liên kết:");
+            var linkTag = "<a href='" + url + "'>" + text + "</a>";
+            document.getElementById("text-area").value += linkTag;
+        }
+
+        function submitData() {
+            var heading = document.getElementById("heading").value;
+            var jobType = document.getElementById("job-type").value;
+            var message = document.getElementById("text-area").value;
+            // Đoạn này bạn có thể sử dụng AJAX hoặc gửi dữ liệu đến server theo yêu cầu của bạn
+            // Ở đây chỉ là một ví dụ đơn giản
+            console.log("Tiêu đề:", heading);
+            console.log("Loại công việc:", jobType);
+            console.log("Nội dung:", message);
+            alert("Đã gửi dữ liệu!");
+        }
+    </script>
+
+
+
+
+</div>
+   </div>
+   <footer id="footer" class="pt-4 footer divider layer-overlay  bg-theme-colored-gray mt-30" style="background-color: rgba(12, 12, 12, 0.905); ">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4">
+                <div class="widget text-white">
+                  <h4 class="widget-title text-white font-16 "><b>Đại học Tôn Đức Thắng</b></h4>
+                        <div class="opening-hours" style="margin-top: 13px;">
+                            <ul class="list-border">
+                                <li class="clearfix">
+                                  <img src="./logo.png" alt="">
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="text-white">
+                        <div class="widget ">
+                            <h4 class="widget-title text-white font-17 font-weight-bold "><b>Liên hệ:</b></h4>
+                            <div class="opening-hours">
+                                <ul class="list-border">
+                                        <li class="clearfix">
+                                            <span>Thông tin liên lạc</span>
+                                            <ul class="list ml-0 mt-5">
+                                                <li class="m-0 pl-0 no-border"> <i class="fa fa-phone text-danger mr-3"></i> <a class="text-white">0937271234</a> </li>
+                                                <li class="m-0 pl-0 no-border"> <i class="fa fa-map-marker mr-4" aria-hidden="true"></i>
+                                                  <a class="text-white">123/Quận 1 TP HCM</a> </li>
+                                            </ul>
+                                        </li>
+                                    <li class="clearfix">
+                                        <span>Mạng xã hội</span>
+                                        <ul class="list ml-0 mt-5">
+                                            <li class="m-0 pl-0 no-border"> <i class="fab fa-facebook"></i> <i class="fab fa-instagram ml-4"></i> <i class="fab fa-facebook-messenger ml-4"></i>  </li>
+                                            <li><i class="fab fa-linkedin mt-2"></i> <i class="fab fa-twitter ml-4"></i></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="text-white">
+                        <div class="widget ">
+                            <h4 class="widget-title text-white font-17 font-weight-bold sm-display-none"><b>&nbsp;&nbsp;&nbsp;</b></h4>
+                            <div class="opening-hours">
+                                <ul class="list-border">
+                                    <li class="clearfix">
+                                        <span>Đăng ký nhận bản tin của chúng tôi</span>
+                                        <ul class="list ml-0 mt-5">
+                                    
+                                                  <form action="">
+                                    
+                                                        <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
+                                                          <input type="email" id="form5Example22" class="form-control" placeholder="Địa chỉ email">
+
+                                                        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
+                                                    
+                                                        <button data-mdb-ripple-init="" type="button" class="btn btn-primary mb-4">
+                                                          Đăng ký
+                                                   
+                                                  </form>
+                                                </div>
+                                        
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="footer-bottom bg-black-333">
+            <div class="container pt-20 pb-20">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-11 m-0 text-white">
+                            Copyright ©2020 Đại học Tôn Đức Thắng
+                            <br>
+                            Ứng dụng được phát triển bởi Tổ phát triển phần mềm - Trung tâm tin học
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </footer> 
