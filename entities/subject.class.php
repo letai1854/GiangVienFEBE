@@ -24,13 +24,31 @@ public function save(){
     $result=$db->query_execute($sql);
     return $result;
 }
-
+public static function saveTaiLieu($sCode,$sTitle,$file,$sType){
+    $file_temp = $file['tmp_name'];
+    $user_file = $file['name'];
+    $filepath = "upload/" . $user_file;
+    if (move_uploaded_file($file_temp, $filepath) == false) {
+        return false;
+    }
+    $db= new Db();
+    $sql = "INSERT INTO subjectDetaiil (subjectCode, subjectTitle, file, subjectType) 
+    VALUES ($sCode, '$sTitle', '$filepath', '$sType')";
+    $result=$db->query_execute($sql);
+    return $result;
+}
 public static function list_Subject(){
     $db= new Db();
     $sql ="SELECT * FROM Subject";
     $result=$db->select_to_array($sql);
     return $result;
     }
+    public static function get_Subject($id){
+        $db= new Db();
+        $sql ="SELECT * FROM Subject  where subjectCode=$id";
+        $result=$db->select_to_array($sql);
+        return $result;
+        }
 
 //     public static function delete_Subject($id){
 //         $db= new Db();
@@ -48,36 +66,50 @@ public static function list_Subject(){
 
 
 
-// public static function update_subject($subjectCode, $subjectName, $subjectDescribe, $picture, $file)
-// {
-//     if ($picture['name'] != "") {
-//         $pic_temp = $picture['tmp_name'];
-//         $user_pic = $picture['name'];
-//         $picpath = "uploads/" . $user_pic;
-//         if (move_uploaded_file($pic_temp, $picpath) == false) {
-//             return false;
-//         }
-//     }
-//     if ($file['name'] != "") {
-//         $file_temp = $file['tmp_name'];
-//         $user_file = $file['name'];
-//         $filepath = "uploads/" . $user_file;
-//         if (move_uploaded_file($file_temp, $filepath) == false) {
-//             return false;
-//         }
-//     }
-//     $sql = "CALL UpdateSubject('$subjectCode','$subjectName','$subjectDescribe',' $picpath',' $filepath')";
+public static function update_subject($subjectCode, $subjectName,$picture)
+{
 
-// try{
-//     $db = new Db();
-//     $db->query_execute(($sql));
-//     return true;
-// }
-// catch(PDOException $e){
-//     return false;
-// }
+    if ($picture['name'] != "") {
+        $pic_temp = $picture['tmp_name'];
+        $user_pic = $picture['name'];
+        $picpath = "upload/" . $user_pic;
+        if (move_uploaded_file($pic_temp, $picpath) == false) {
+            return false;
+        }
+    }
+    $sql = "CALL updateSubject('$subjectCode','$subjectName',' $picpath')";
 
-// }
+try{
+    $db = new Db();
+    $db->query_execute(($sql));
+    return true;
+}
+catch(PDOException $e){
+    return false;
+}
+
+}
+public static function update_subjectname($subjectCode, $subjectName)
+{
+
+    $sql = "CALL updateNameSubject('$subjectCode','$subjectName')";
+
+try{
+    $db = new Db();
+    $db->query_execute(($sql));
+    return true;
+}
+catch(PDOException $e){
+    return false;
+}
+
+}
+public static function delete_Subject($id){
+    $db= new Db();
+    $sql ="DELETE  FROM Subject Where subjectCode='$id'";
+    $result=$db->query_execute($sql);
+return $result;
+}
 }
 
 ?>

@@ -3,21 +3,28 @@ require_once("entities/subject.class.php");
 $id=$_GET['sid'];
 $subject=Detail::get_Subject($id);
 $name=$subject[0]['subjectName'];
-if(isset($_POST['btnAccept'])){
-  $name=$_POST['name'];
-  $type=$_POST['type'];
-  $file=$_FILES['document'];
-  $result=Detail::saveTaiLieu($id,$name,$file,$type);
-  if(isset($result)){
-		if(!$result){
-			echo '<script>alert("không thêm được!")</script>';
-			$again = true;
-		}
-		else{
-			echo '<script>alert("Thêm thành công!")</script>';
-		}
-	}
+$file=$subject[0]['subjectImage'];
+$hinh="<br> <br> <img src='".$file."'width='100'>";
+
+
+if(isset($_POST['btnSubmit'])){
+    if ($_FILES['image']['name'] != '') {
+        $result=Detail::update_subject($id,$_POST['namesubject'],$_FILES['image']);
+        $subject=Detail::get_Subject($id);
+        $file=$subject[0]['subjectImage'];
+        $hinh="<br> <br> <img src='". $file."'width='100'>";
+    }
+    else{
+        $result=Detail::update_subjectname($id,$_POST['namesubject']);
+        $hinh="<br> <br> <img src='".$file."'width='100'>";
+    }
+    if ($result == true) {
+        echo "<script>alert('Sửa thành công!');</script>";
+    } else {
+        echo "<script>alert('Sửa thất bại!');</script>";
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -52,33 +59,29 @@ if(isset($_POST['btnAccept'])){
             </div>
       </div>
       <div class="titleSubject">
-        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);"><?php echo $name ?></h1>
+        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">MÔN HỌC</h1>
       </div>
       <div class="row  container">
         <div class="col-xl-9 col-md-6 col-12">
           <div class="container ">
-            <h2 class="text-center" style="color: rgba(255, 21, 4, 0.966);">Thêm tài liệu</h2>
-            <form action="#" method="post" class="formSubject"enctype="multipart/form-data">
+            <h2 class="text-center" style="color: rgba(255, 21, 4, 0.966);">Sửa Môn Học</h2>
+            <form action="#" method="post" class="formSubject" enctype="multipart/form-data">
               <div class="form-group">
-                <label for="name">Tên tài liệu:</label>
-                <input type="text" id="name" name="name" class="form-control">
-              </div>
-           
-              <div class="form-group">
-                <label for="type">Loại:</label>
-                <select id="type" name="type" class="form-control">
-                  <option value="theory" >Lý thuyết</option>
-                  <option value="practice">Thực hành</option>
-                  <option value="other">Khác</option>
-                </select>
+                <label for="name">Tên môn học:</label>
+                <input type="text" id="name" name="namesubject" class="form-control" value="<?php echo $name ?> ">
               </div>
               <div class="form-group">
-                <label for="document">Chọn file:</label>
-                <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" class="form-control-file">
+                <label for="image">Chọn ảnh môn học:</label>
+                <input type="file" name="image" id="txt_image" accept=".PNG,.GIF,.JPG,.JPEG,.jpg,.png,.jpeg"   >	
+                <?php
+                    echo $hinh
+                ?>
+                
+
               </div>
                             
               <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="btnAccept">Xác nhận</button>
+                <button type="submit" class="btn btn-primary" name="btnSubmit">Xác nhận</button>
               </div>
             </form>
           </div>
@@ -184,3 +187,6 @@ if(isset($_POST['btnAccept'])){
         </div>
 
     </footer> 
+    
+</body>
+</html>

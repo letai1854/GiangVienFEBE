@@ -11,8 +11,14 @@ else{
 }
 
 	$list_subject = Detail::list_Subject();
-
-
+if(isset($_POST['Delete'])){
+  $id=$_POST['Id'];
+  $result = Detail::delete_Subject($id);
+}
+try {
+	$list_subject = Detail::list_Subject();
+} catch (Exception $e) {
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +67,7 @@ else{
                  <?php
                 if($owner){
                   echo' <li class="nav-item">
-                  <a class="nav-link" href="./themmonhoc.html" >Thêm môn học</a>
+                  <a class="nav-link" href="./themmonhoc.php" >Thêm môn học</a>
                 </li>
        
                 <li class="nav-item dropdown">
@@ -106,7 +112,7 @@ else{
             <div class="text-center" style="font-size: 1.8rem;font-weight: bold; color:rgba(255, 0, 0, 0.793); "><p>Môn học <br>
             <hr style="color: red; border-top: 2px solid red; font-weight: bold;"> </p></div>
             <div class="row">
-                <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
+                <!-- <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
                   <div class="card shadow-sm">
                     <a href="./ChiTietMonHoc.html"><img src="./image/lthdt.png" alt=""></a>
                     <div class="card-body">
@@ -124,8 +130,8 @@ else{
          
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
+                </div> -->
+                <!-- <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
                   <div class="card shadow-sm">
                     <img src="./image/ctdlgt1.jpg" alt="">
                     <div class="card-body">
@@ -233,25 +239,7 @@ else{
             </button>
                     </div>
                   </div>
-                </div>
-                <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
-                  <div class="card shadow-sm"> 
-                    <img src="./image/game.jpg" alt="">
-                    <div class="card-body">
-                      <p class="card-text text-center" style="color: blue;">Lập trình game Cùng Thầy Thanh</p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-body-secondary"> Giảng viên: Dzoãn Xuân Thanh</small>
-                      </div>
-                      
-                      <button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn">Sửa</button>
-          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn"><a href="themTaiLieu.php?">Xóa</a> </button>
-        
-              <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
-                <a style="color: white; text-decoration: none; width:150px">Thêm</a>
-            </button>
-                    </div>
-                  </div>
-                </div>
+                </div> -->
                 <?php
                 if(isset($list_subject)){
                   if(is_array($list_subject)){
@@ -263,18 +251,20 @@ else{
                           <p class="card-text text-center" style="color: blue;">'.htmlspecialchars($item['subjectName']).'</p>
                       ';
                         if($owner){
-                          echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn">Sửa</button>
-                          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn">Xóa</button>
+                          echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="suamonhoc.php?sid='.$item['subjectCode'].'">Sửa</a></button>
+                          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['subjectCode']) . '\')">Xóa</button>
                         
                               <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
-                                <a style="color: white; text-decoration: none; width:150px"><a href="themTaiLieu.php?sid=<?php echo '.$item['subjectCode'].' ?>">Xóa</a></a>
-                            </button>   </div>
+                                <a style="color: white; text-decoration: none; width:150px"><a style="color: white; text-decoration: none;" href="themTaiLieu.php?sid='.$item['subjectCode'].'">Thêm</a></a>
+                            </button>';
+                        }
+                 
+                  echo '</div>
                   </div>
                 </div>';
-                        }
-                    }
-                  }
                 }
+                   }
+                  }
                 
                 ?>
 
@@ -490,6 +480,30 @@ else{
             </div>
         </div>
     </footer>  
+    <script>
+    function delete_btn(id) {
+        if (confirm('Bạn có chắc muốn xóa môn học') == true) {
+            var idstr = id.toString();
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var id = document.createElement("input");
+            id.setAttribute("type", "text");
+            id.setAttribute("name", "Id");
+            id.setAttribute("value", '' + idstr);
+
+            var btn = document.createElement("button");
+            btn.setAttribute("type", "submit");
+            btn.setAttribute("name", "Delete");
+            form.appendChild(id);
+            form.appendChild(btn);
+            document.getElementsByTagName("body")[0]
+                .appendChild(form);
+            btn.click();
+        }
+    }
+</script>
 
 
 </body>
