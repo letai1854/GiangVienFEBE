@@ -250,7 +250,14 @@ margin-left: 10px;
 }
 
 body > nav > div > p{
-    color: red;
     margin-top: 3px;
     font-weight: 400;
+    
+}
+.chitiet{
+    color: red;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+   
 }

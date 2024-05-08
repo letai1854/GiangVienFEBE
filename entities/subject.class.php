@@ -32,24 +32,64 @@ public static function saveTaiLieu($sCode,$sTitle,$file,$sType){
         return false;
     }
     $db= new Db();
-    $sql = "INSERT INTO subjectDetaiil (subjectCode, subjectTitle, file, subjectType) 
+    $sql = "INSERT INTO subjectDetaiil (subjectCode, subjectTitle,  file   , subjectType) 
     VALUES ($sCode, '$sTitle', '$filepath', '$sType')";
     $result=$db->query_execute($sql);
     return $result;
 }
-public static function list_Subject(){
+public static function saveVideo($sCode,$sTitle,$file,$sType){
+    $db= new Db();
+    $sql = "INSERT INTO subjectDetaiil (subjectCode, subjectTitle,  file   , subjectType) 
+    VALUES ($sCode, '$sTitle', '$file', '$sType')";
+    $result=$db->query_execute($sql);
+    return $result;
+}
+public static function list_Subject()
+{
     $db= new Db();
     $sql ="SELECT * FROM Subject";
     $result=$db->select_to_array($sql);
     return $result;
+}
+public static function get_Subject($id)
+{
+    $db= new Db();
+    $sql ="SELECT * FROM Subject  where subjectCode=$id";
+    $result=$db->select_to_array($sql);
+    return $result;
+}
+public static function suaTaiLieu($id,$Title,$file,$Type){
+    $file_temp = $file['tmp_name'];
+    $user_file = $file['name'];
+    $filepath = "upload/" . $user_file;
+    if (move_uploaded_file($file_temp, $filepath) == false) {
+        return false;
     }
-    public static function get_Subject($id){
-        $db= new Db();
-        $sql ="SELECT * FROM Subject  where subjectCode=$id";
-        $result=$db->select_to_array($sql);
-        return $result;
-        }
-
+    $db= new Db();
+    $sql = "CALL updateDetailSubject($id,'$Title','$filepath',' $Type')";
+    $result=$db->query_execute($sql);
+    return $result;
+}
+public static function suaVideo($id,$Title,$file,$Type){
+    $db= new Db();
+    $sql = "CALL updateDetailSubject($id,'$Title','$file',' $Type')";
+    $result=$db->query_execute($sql);
+    return $result;
+}
+public static function list_SubjectDtail($id)
+{
+    $db= new Db();
+    $sql ="SELECT * FROM subjectDetaiil where subjectCode=$id";
+    $result=$db->select_to_array($sql);
+    return $result;
+}
+public static function list_SubjectDetailId($id)
+{
+    $db= new Db();
+    $sql ="SELECT * FROM subjectDetaiil where id=$id";
+    $result=$db->select_to_array($sql);
+    return $result;
+}
 //     public static function delete_Subject($id){
 //         $db= new Db();
 //         $sql ="DELETE  FROM Subject Where subjectCode='$id'";
@@ -69,25 +109,27 @@ public static function list_Subject(){
 public static function update_subject($subjectCode, $subjectName,$picture)
 {
 
-    if ($picture['name'] != "") {
+    if ($picture['name'] != "") 
+    {
         $pic_temp = $picture['tmp_name'];
         $user_pic = $picture['name'];
         $picpath = "upload/" . $user_pic;
-        if (move_uploaded_file($pic_temp, $picpath) == false) {
+        if (move_uploaded_file($pic_temp, $picpath) == false)
+        {
             return false;
         }
     }
     $sql = "CALL updateSubject('$subjectCode','$subjectName',' $picpath')";
-
-try{
+try
+{
     $db = new Db();
     $db->query_execute(($sql));
     return true;
 }
-catch(PDOException $e){
+catch(PDOException $e)
+{
     return false;
 }
-
 }
 public static function update_subjectname($subjectCode, $subjectName)
 {
@@ -102,11 +144,18 @@ try{
 catch(PDOException $e){
     return false;
 }
-
 }
-public static function delete_Subject($id){
+public static function delete_Subject($id)
+{
     $db= new Db();
     $sql ="DELETE  FROM Subject Where subjectCode='$id'";
+    $result=$db->query_execute($sql);
+return $result;
+}
+public static function delete_SubjectDetaile($id)
+{
+    $db= new Db();
+    $sql ="DELETE  FROM subjectDetaiil Where id=$id";
     $result=$db->query_execute($sql);
 return $result;
 }

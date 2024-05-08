@@ -1,3 +1,46 @@
+<?php
+require_once("entities/subject.class.php");
+$id=$_GET['sid'];
+$subject=Detail::list_SubjectDetailId($id);
+$name=$subject[0]['subjectTitle'];
+$file=$subject[0]['file'];
+$type=$subject[0]['subjectType'];
+if(isset($_POST['btnAccept']))
+{
+  $ten=$_POST['name'];
+  $loai=$_POST['type'];
+  $f=$_FILES['editor'];
+  $video=$_POST['video'];
+  $check=false;
+  if($video!='' && ($loai=="other" ||$loai==" other")){
+    $result=Detail::suaVideo($id,$ten,$video,$loai);
+    $check=true;
+  }
+  if($_FILES['editor']['name'] != '' &&($loai!="other"||$loai!=" other")) 
+  {
+    $result=Detail::suaTaiLieu($id,$ten,$f,$loai);
+    $subject=Detail::list_SubjectDetailId($id);
+    $file=$subject[0]['file'];
+    $check=true;
+
+  }
+  if(!$check){
+    echo '<script>alert("Hãy chọn đúng dữ liệu!")</script>';
+  }
+  if(isset($result))
+  {
+		if(!$result)
+    {
+			echo '<script>alert("không thêm được!")</script>';
+		}
+		else
+    {
+			echo '<script>alert("Thêm thành công!")</script>';
+		}
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,50 +72,52 @@
                 </div>
             </div>
       </div>
-      <div class="titleSubject">
-        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">LẬP TRÌNH WEB VÀ ỨNG DỤNG</h1>
-      </div>
+      <!-- <div class="titleSubject">
+        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);"><?php echo $name ?></h1>
+      </div> -->
       <div class="row  container">
         <div class="col-xl-9 col-md-6 col-12">
-          <div class="container">
+          <div class="container ">
             <h2 class="text-center" style="color: rgba(255, 21, 4, 0.966);">Sửa tài liệu</h2>
-            <form action="#" method="post" class="formSubject">
+            <form action="#" method="post" class="formSubject"enctype="multipart/form-data">
               <div class="form-group">
                 <label for="name">Tên tài liệu:</label>
-                <input type="text" id="name" name="name" class="form-control">
+                <input type="text" id="name" name="name" class="form-control" value="<?php echo $name?>">
               </div>
+           
               <div class="form-group">
                 <label for="type">Loại:</label>
-                <select id="type" name="type" class="form-control">
-                  <option value="theory">Lý thuyết</option>
-                  <option value="practice">Thực hành</option>
-                  <option value="other">Khác</option>
+                <select id="type" name="type" class="form-control" >
+                  <option value="theory" <?php if($type == 'theory' ||$type == ' theory') echo 'selected'; ?> >Lý thuyết</option>
+                  <option value="practice" <?php if($type == 'practice'||$type == ' practice') echo 'selected'; ?>>Thực hành</option>
+                  <option value="other" <?php if($type == 'other'||$type == ' other') echo 'selected'; ?>>Khác</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="publish_date">Ngày đăng:</label>
-                <input type="date" id="publish_date" name="publish_date" class="form-control">
-              </div>
+                <label for="document">Chọn file:</label>
+                <!-- <textarea name="editor" id="editor"></textarea> -->
+                <input type="file" id="document" name="editor" accept=".pdf,.doc,.docx" class="form-control">
+                <div>
+                  <p><?php echo ($type!='other') ? $file : ''; ?></p>
+                </div>
+              </div>       
               <div class="form-group">
-                <label for="image">Chọn ảnh đại diện:</label>
-                <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
+              <label for="video">Chọn video:</label>
+              <input type="text" id="video" name="video" class="form-control" value="<?php echo ($type=='other') ? $file : ''; ?>">
+              </div>      
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" name="btnAccept">Xác nhận</button>
               </div>
               
-              <div class="form-group">
-                <label for="document">Chọn file:</label>
-                <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" class="form-control-file">
-              </div>
-                            
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary">Xác nhận</button>
-              </div>
+
             </form>
           </div>
         </div>
+      </div> 
       </div>
-      
-      </div>
-  
+
+
+
 
   
   <footer id="footer" class="pt-4 footer divider layer-overlay  bg-theme-colored-gray mt-30" style="background-color: rgba(12, 12, 12, 0.905);">

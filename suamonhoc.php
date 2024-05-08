@@ -7,26 +7,30 @@ $file=$subject[0]['subjectImage'];
 $hinh="<br> <br> <img src='".$file."'width='100'>";
 
 
-if(isset($_POST['btnSubmit'])){
-    if ($_FILES['image']['name'] != '') {
+if(isset($_POST['btnSubmit']))
+{
+    if ($_FILES['image']['name'] != '') 
+    {
         $result=Detail::update_subject($id,$_POST['namesubject'],$_FILES['image']);
         $subject=Detail::get_Subject($id);
         $file=$subject[0]['subjectImage'];
         $hinh="<br> <br> <img src='". $file."'width='100'>";
     }
-    else{
+    else
+    {
         $result=Detail::update_subjectname($id,$_POST['namesubject']);
         $hinh="<br> <br> <img src='".$file."'width='100'>";
     }
-    if ($result == true) {
+    if ($result == true)
+    {
         echo "<script>alert('Sửa thành công!');</script>";
-    } else {
+    } else 
+    {
         echo "<script>alert('Sửa thất bại!');</script>";
     }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,10 +80,7 @@ if(isset($_POST['btnSubmit'])){
                 <?php
                     echo $hinh
                 ?>
-                
-
-              </div>
-                            
+              </div>                         
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" name="btnSubmit">Xác nhận</button>
               </div>

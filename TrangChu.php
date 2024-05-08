@@ -241,37 +241,37 @@ try {
                   </div>
                 </div> -->
                 <?php
-                if(isset($list_subject)){
-                  if(is_array($list_subject)){
-                    foreach($list_subject as $item){
+                if(isset($list_subject))
+                {
+                  if(is_array($list_subject))
+                  {
+                    foreach($list_subject as $item)
+                    {
                       echo '<div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
                       <div class="card shadow-sm"> 
                         <img src="'.htmlspecialchars($item['subjectImage']).'" alt="">
                         <div class="card-body">
                           <p class="card-text text-center" style="color: blue;">'.htmlspecialchars($item['subjectName']).'</p>
-                      ';
-                        if($owner){
-                          echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="suamonhoc.php?sid='.$item['subjectCode'].'">Sửa</a></button>
-                          <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['subjectCode']) . '\')">Xóa</button>
-                        
-                              <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
-                                <a style="color: white; text-decoration: none; width:150px"><a style="color: white; text-decoration: none;" href="themTaiLieu.php?sid='.$item['subjectCode'].'">Thêm</a></a>
-                            </button>';
-                        }
-                 
-                  echo '</div>
-                  </div>
-                </div>';
-                }
-                   }
-                  }
-                
-                ?>
+                          <div class="chitiet" style="text-align: center;">
+    <p><a style="color: red; text-decoration: none;" href="ChiTietMonHoc.php?sid='.$item['subjectCode'].'">Xem chi tiết</a></p>
+</div>
 
-                
-                
-              
-          
+                      ';
+                      if($owner)
+                      {
+                        echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="suamonhoc.php?sid='.$item['subjectCode'].'">Sửa</a></button>
+                        <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['subjectCode']) . '\')">Xóa</button>
+                        <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
+                        <a style="color: white; text-decoration: none; width:150px"><a style="color: white; text-decoration: none;" href="themTaiLieu.php?sid='.$item['subjectCode'].'">Thêm</a></a>
+                        </button>';
+                      }
+                      echo '</div>
+                      </div>
+                      </div>';
+                  }
+                }
+              }
+              ?>
             </div>
         </div>
         

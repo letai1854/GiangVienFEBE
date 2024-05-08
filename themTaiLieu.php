@@ -3,17 +3,34 @@ require_once("entities/subject.class.php");
 $id=$_GET['sid'];
 $subject=Detail::get_Subject($id);
 $name=$subject[0]['subjectName'];
-if(isset($_POST['btnAccept'])){
+if(isset($_POST['btnAccept']))
+{
   $name=$_POST['name'];
   $type=$_POST['type'];
-  $file=$_FILES['document'];
-  $result=Detail::saveTaiLieu($id,$name,$file,$type);
-  if(isset($result)){
-		if(!$result){
+  $file=$_FILES['editor'];
+  $video=$_POST['video'];
+  $check=false;
+  if($video!="" && $type=="other"){
+    $result=Detail::saveVideo($id,$name,$video,$type);
+    $check=true;
+  }
+  if($_FILES['editor']['name'] != '' &&$type!="other") 
+  {
+    $result=Detail::saveTaiLieu($id,$name,$file,$type);
+    $check=true;
+
+  }
+  if(!$check){
+    echo '<script>alert("Hãy chọn đúng dữ liệu!")</script>';
+  }
+  if(isset($result))
+  {
+		if(!$result)
+    {
 			echo '<script>alert("không thêm được!")</script>';
-			$again = true;
 		}
-		else{
+		else
+    {
 			echo '<script>alert("Thêm thành công!")</script>';
 		}
 	}
@@ -74,19 +91,42 @@ if(isset($_POST['btnAccept'])){
               </div>
               <div class="form-group">
                 <label for="document">Chọn file:</label>
-                <input type="file" id="document" name="document" accept=".pdf,.doc,.docx" class="form-control-file">
-              </div>
-                            
+                <!-- <textarea name="editor" id="editor"></textarea> -->
+                <input type="file" id="document" name="editor" accept=".pdf,.doc,.docx" class="form-control">
+              </div>       
+              <div class="form-group">
+              <label for="video">Chọn video:</label>
+              <input type="text" id="video" name="video" class="form-control">
+              </div>      
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" name="btnAccept">Xác nhận</button>
               </div>
+              
+
             </form>
           </div>
         </div>
-      </div>
-      
+      </div> 
       </div>
   
+      <!-- <script src="ckeditor5-build-classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+        .create(document.querySelector("#editor"),{
+            ckfinder:{
+                uploadUrl:'fileupload.php'
+            }
+        })
+        .then(editor=>{
+            console.log(editor);
+        })
+
+        .catch(error=>{
+            console.error(error)
+        });
+    </script> -->
+
+
 
   
   <footer id="footer" class="pt-4 footer divider layer-overlay  bg-theme-colored-gray mt-30" style="background-color: rgba(12, 12, 12, 0.905);">
