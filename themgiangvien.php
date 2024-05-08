@@ -1,41 +1,46 @@
-<?php
-require_once("entities/subject.class.php");
-$id=$_GET['sid'];
-$subject=Detail::get_Subject($id);
-$name=$subject[0]['subjectName'];
-if(isset($_POST['btnAccept']))
+<?php 
+require_once('entities/account.php');
+require_once('entities/subject.class.php');
+session_start();
+if(isset($_SESSION['username']))
 {
+$user=$_SESSION['username'];
+}
+if(isset($_POST['btnxacnhan'])){
   $name=$_POST['name'];
-  $type=$_POST['type'];
-  $file=$_FILES['editor'];
-  $video=$_POST['video'];
-  $check=false;
-  if($video!="" && $type=="other"){
-    $result=Detail::saveVideo($id,$name,$video,$type);
-    $check=true;
-  }
-  if($_FILES['editor']['name'] != '' &&$type!="other") 
-  {
-    $result=Detail::saveTaiLieu($id,$name,$file,$type);
-    $check=true;
-
-  }
-  if(!$check){
-    echo '<script>alert("Hãy chọn đúng dữ liệu!")</script>';
-  }
-  if(isset($result))
-  {
-		if(!$result)
-    {
+  $sdt=$_POST['sdt'];
+  $email=$_POST['email'];
+  $result=User::update_User($name,$user);
+  if(isset($result)){
+		if(!$result){
 			echo '<script>alert("không thêm được!")</script>';
+			$again = true;
 		}
-		else
-    {
+		else{
+      echo '<script>
+    var sdt = $("input[name=\'sdt\']").val();
+    var email = $("input[name=\'email\']").val(); 
+    $.ajax({
+        url: "footer.php",
+        method: "post",
+        data: $("#frm").serialize(), // Sử dụng serialize() với id của form
+        success: function(response){
+            alert("Thành công");
+        },
+        error: function(xhr, status, error){
+            alert("Lỗi: " + error);
+        }
+    });
+</script>';
+
 			echo '<script>alert("Thêm thành công!")</script>';
 		}
 	}
 }
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +50,7 @@ if(isset($_POST['btnAccept']))
     <title>home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
 
 <link rel="stylesheet" href="style.css">
@@ -69,66 +74,60 @@ if(isset($_POST['btnAccept']))
             </div>
       </div>
       <div class="titleSubject">
-        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);"><?php echo $name ?></h1>
+        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">THÊM THÔNG TIN GIẢNG VIÊN</h1>
+        <hr style="color: red; border-top: 2px solid red; font-weight: bold;"> </p></div>
       </div>
-      <div class="row  container">
+      <div class="row  container infor">
         <div class="col-xl-9 col-md-6 col-12">
+          <div class="text-center" style="font-size: 1.8rem;font-weight: bold; color:rgba(255, 0, 0, 0.793); "><p>Thông tin<br>
+            </div>
           <div class="container ">
-            <h2 class="text-center" style="color: rgba(255, 21, 4, 0.966);">Thêm tài liệu</h2>
-            <form action="#" method="post" class="formSubject"enctype="multipart/form-data">
+            <form action="#" method="post" class="formSubject" id="frm">
               <div class="form-group">
-                <label for="name">Tên tài liệu:</label>
+                <label for="name">Tên giảng viên:</label>
                 <input type="text" id="name" name="name" class="form-control">
               </div>
-           
               <div class="form-group">
-                <label for="type">Loại:</label>
-                <select id="type" name="type" class="form-control">
-                  <option value="theory" >Lý thuyết</option>
-                  <option value="practice">Thực hành</option>
-                  <option value="other">Khác</option>
-                </select>
+                <label for="name">Số điện thoại:</label>
+                <input type="text" id="name" name="sdt" class="form-control">
               </div>
               <div class="form-group">
-                <label for="document">Chọn file:</label>
-                <!-- <textarea name="editor" id="editor"></textarea> -->
-                <input type="file" id="document" name="editor" accept=".pdf,.doc,.docx" class="form-control">
-              </div>       
-              <div class="form-group">
-              <label for="video">Chọn video:</label>
-              <input type="text" id="video" name="video" class="form-control">
-              </div>      
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="btnAccept">Xác nhận</button>
+                <label for="name">Email:</label>
+                <input type="text" id="name" name="email" class="form-control">
               </div>
               
-
+                            
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" name="btnxacnhan" id="btnxacnhan">Xác nhận</button>
+              </div>
             </form>
           </div>
         </div>
-      </div> 
       </div>
-  
-      <!-- <script src="ckeditor5-build-classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-        .create(document.querySelector("#editor"),{
-            ckfinder:{
-                uploadUrl:'fileupload.php'
+      
+      </div>
+      <script>
+$(document).ready(function(){
+    $('#btnxacnhan').click(function(e){
+        var sdt = $('#sdt').val();
+        var email = $('#email').val();
+        $.ajax({
+            url: 'footer.php',
+            method: 'post',
+            // data: {
+            //     sdt: sdt,
+            //     email: email
+            // },
+            data:$('$frm').serialize(),
+            success: function(){
+              alert("thành công");
             }
-        })
-        .then(editor=>{
-            console.log(editor);
-        })
-
-        .catch(error=>{
-            console.error(error)
         });
-    </script> -->
+    });
+});
+</script>
 
+      <?php require_once("footer.php") ?>
 
-
-  
-    <?php require_once("footer.php") ?>
 </body>
 </html>

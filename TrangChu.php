@@ -75,7 +75,6 @@ try {
                     Thêm thông tin
                   </a>
                   <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./themgiangvien.html" >Giảng viên</a></li>
                     <li><a class="dropdown-item" href="./capnhatthongtin.html">Thông Tin</a></li>
                   </ul>
                 </li>
@@ -84,7 +83,7 @@ try {
                     Cập nhật thông tin
                   </a>
                   <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./themgiangvien.html"  >Giảng viên</a></li>
+                    <li><a class="dropdown-item" href="./themgiangvien.php"  >Giảng viên</a></li>
                     <li><a class="dropdown-item" href="./Thongbaochinhsua.html">Thông báo-Tin tức</a></li>
                     <li><a class="dropdown-item" href="./suaViecLam.html">Thông tin việc làm</a></li>
                   </ul>
@@ -386,100 +385,8 @@ try {
       
       </div>
 </div>
-  <footer id="footer" class="pt-4 footer divider layer-overlay  bg-theme-colored-gray mt-30" style="background-color: rgba(12, 12, 12, 0.905);">
-    <div class="container">
-        <div class="row ">
-            <div class="col-md-4">
-                <div class="widget text-white">
-                  <h4 class="widget-title text-white font-16 "><b>Đại học Tôn Đức Thắng</b></h4>
-                        <div class="opening-hours" style="margin-top: 13px;">
-                            <ul class="list-border">
-                                <li class="clearfix">
-                                  <img src="./logo.png" alt="">
-                                </li>
+<?php require_once("footer.php") ?>
 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="text-white">
-                        <div class="widget ">
-                            <h4 class="widget-title text-white font-17 font-weight-bold "><b>Liên hệ:</b></h4>
-                            <div class="opening-hours">
-                                <ul class="list-border">
-                                        <li class="clearfix">
-                                            <span>Thông tin liên lạc</span>
-                                            <ul class="list ml-0 mt-5">
-                                                <li class="m-0 pl-0 no-border"> <i class="fa fa-phone text-danger mr-3"></i> <a class="text-white">123456789</a> </li>
-                                                <li class="m-0 pl-0 no-border"> <i class="fa fa-map-marker mr-4" aria-hidden="true"></i>
-                                                  <a class="text-white">999/Quận 2 TP HCM</a> </li>
-                                            </ul>
-                                        </li>
-                                    <li class="clearfix">
-                                        <span>Mạng xã hội</span>
-                                        <ul class="list ml-0 mt-5">
-                                            <li class="m-0 pl-0 no-border"> <i class="fab fa-facebook"></i> <i class="fab fa-instagram ml-4"></i> <i class="fab fa-facebook-messenger ml-4"></i>  </li>
-                                            <li><i class="fab fa-linkedin mt-2"></i> <i class="fab fa-twitter ml-4"></i></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-4">
-                    <div class="text-white">
-                        <div class="widget ">
-                            <h4 class="widget-title text-white font-17 font-weight-bold sm-display-none"><b>&nbsp;&nbsp;&nbsp;</b></h4>
-                            <div class="opening-hours">
-                                <ul class="list-border">
-                                    <li class="clearfix">
-                                        <span>Đăng ký nhận bản tin của chúng tôi</span>
-                                        <ul class="list ml-0 mt-5">
-                                    
-                                                  <form action="">
-                                    
-                                                        <div data-mdb-input-init="" class="form-outline mb-4" data-mdb-input-initialized="true">
-                                                          <input type="email" id="form5Example22" class="form-control" placeholder="Địa chỉ email">
-
-                                                        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
-                                                    
-                                                        <button data-mdb-ripple-init="" type="button" class="btn btn-primary mb-4">
-                                                          Đăng ký
-                                                   
-                                                  </form>
-                                                </div>
-                                        
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-        <div class="footer-bottom bg-black-333">
-            <div class="container pt-20 pb-20">
-                <div class="row">
-                    <div class="col-md-6">
-                        <p class="font-11 m-0 text-white">
-                            Copyright ©2020 Đại học Tôn Đức Thắng
-                            <br>
-                            Ứng dụng được phát triển bởi Tổ phát triển phần mềm - Trung tâm tin học
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </footer>  
     <script>
     function delete_btn(id) {
         if (confirm('Bạn có chắc muốn xóa môn học') == true) {
