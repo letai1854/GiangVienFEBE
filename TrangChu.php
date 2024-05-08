@@ -1,24 +1,32 @@
 <?php
-require_once('entities/account.php');
-require_once('entities/subject.class.php');
-session_start();
-if(isset($_SESSION['username'])){
-  $userName=user::get_teacherName($_SESSION['username']);
-  $owner=true;
-}
-else{
-  $owner=false;
-}
+  require_once('entities/account.php');
+  require_once('entities/subject.class.php');
+  require_once('entities/thongtin.class.php');
+  session_start();
+  if(isset($_SESSION['username'])){
+    $userName=user::get_teacherName($_SESSION['username']);
+    $owner=true;
+  }
+  else{
+    $owner=false;
+  }
 
-	$list_subject = Detail::list_Subject();
-if(isset($_POST['Delete'])){
-  $id=$_POST['Id'];
-  $result = Detail::delete_Subject($id);
-}
-try {
-	$list_subject = Detail::list_Subject();
-} catch (Exception $e) {
-}
+  $list_subject = Detail::list_Subject();
+  if(isset($_POST['Delete'])){
+    $id=$_POST['Id'];
+    $result = Detail::delete_Subject($id);
+  }
+  try {
+    $list_subject = Detail::list_Subject();
+  } catch (Exception $e) {
+
+  }
+
+  $list_thongbao = ThongTin::getListThongTinByType("thongbao");
+  $list_vieclam = ThongTin::getListThongTinByType("vieclam");
+  $list_tintuc = ThongTin::getListThongTinByType("tintuc");
+
+  
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +79,11 @@ try {
                 </li>
        
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./capnhatthongtin.html">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./capnhatthongtin.php">
                     Thêm thông tin
                   </a>
                   <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./capnhatthongtin.html">Thông Tin</a></li>
+                    <li><a class="dropdown-item" href="./capnhatthongtin.php">Thông Tin</a></li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -280,7 +288,23 @@ try {
           <p style="display: inline; margin-left: 5px;">Thông báo</p> <!-- Văn bản -->
       </div>
       <div class="row newspaper" style="margin-top: 14px;">
-        <div class="col-12">
+        <?php
+          if(isset($list_thongbao))
+          {
+            if(is_array($list_thongbao))
+            {
+              foreach($list_thongbao as $item)
+              {
+                echo '<div class="col-12">
+                         <h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6>
+                      <p>'.htmlspecialchars($item['day']).'</p>
+                      </div>';
+              }
+            }
+          }
+
+        ?>
+        <!-- <div class="col-12">
           <h6 style="color: black;">Thông báo mở khóa học Blockchain cho tất cả sinh viên khoa công nghệ thông tin lần 1 năm 2024</h6>
         <p>10/05/2024</p>
         </div>
@@ -311,7 +335,7 @@ try {
         <div class="col-12">
           <h6 style="color: black;">Đăng ký môn học khoa công nghệ thông tin</h6>
         <p>11/01/2024</p>
-        </div>
+        </div> -->
       </div>
     
       </div>
@@ -323,67 +347,50 @@ try {
           <p style="display: inline; margin-left: 5px;">Thông tin việc làm</p> <!-- Văn bản -->
       </div>
       <div class="row">
-        <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
-          <div class="card shadow-sm">
-            <img src="./image/viec.jpg" alt="">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <a href="./vieclam.html"><small class="text-body-secondary">Ngày hội việc làm trường đại học Tôn Đức Thắng 29/02/2024</small></a>
-              </div>
+          <?php
+          if (isset($list_vieclam)) {
+            if (is_array(($list_vieclam))) {
+              foreach ($list_vieclam as $item) {
+                echo '<div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
+                      <div class="card shadow-sm">
+                        <img src="'.htmlspecialchars($item['infoImage']).'" alt="">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <a href="chitietthongtin.php?sid='.$item['id'].'"><small class="text-body-secondary">'.htmlspecialchars($item['infoTitle']).'</small></a>
+                            <div class="mt-2"><small class="text-body-secondary">' . htmlspecialchars($item['day']) . '</small></div>
+                          </div>'
+                        ;
 
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
-          <div class="card shadow-sm">
-            <img src="./image/ict.jpg" alt="">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-body-secondary">Hãy đến với chúng tôi! Cơ hội làm việc tại công ty TNHH ICT 21/05/2024</small>
-              </div>
-         
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
-          <div class="card shadow-sm">
-            <img src="./image/viettel.jpg" alt="">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-body-secondary">Các bạn sinh viên ơi! Đăng ký tham quan công ty Viettel 20/05/2024</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
-          <div class="card shadow-sm">
-            <img src="./image/hannel.jpg" alt="">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-body-secondary">Trải nghiệm làm việc tại công ty cổ phần Hannel 19/05/2024</small>
-              </div>
-
-            </div>
-          </div>
-        </div>
+              if ($owner) {
+                echo '<div class="mt-3">'; // Add margin top for button alignment
+                echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?sid='.$item['id'].'">Sửa</a></button>
+                      <button type="button" class="btn btn-sm ml-2" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>';
+                echo '</div>'; // Close the div for button alignment
+              }
+              echo '</div>
+                    </div>
+                    </div>';
+              }
+            }
+          }
+        ?>
       </div>
+    </div>
     
-      </div>
-      <div class="col-xl-3 col-md-4 col-sm-6 col-12">
-        <div class="mb-3"  style="display: inline-block; font-size: 1.8rem; font-weight: bold; color: rgba(255, 0, 0, 0.793); "> <!-- Container bọc quanh cả biểu tượng và văn bản -->
-          <i class="fas fa-newspaper fas fa-calendar"></i> <!-- Biểu tượng -->
-          <p style="display: inline; margin-left: 5px;">Tin tức</p> <!-- Văn bản -->
-      </div>
-      <div class="card shadow-sm" style="border: 2px solid rgba(0, 0, 0, 0.386);"> 
-        <img src="./image/sk.jpg" alt="">
-        <div class="card-body">
-          <p class="card-text "><a href="./tintuc.html">Lễ công bố Trường Đại học Tôn Đức Thắng đạt chuẩn kiểm định chất lượng cơ sở giáo dục theo tiêu chuẩn FIBAA và thêm 18 chương trình đào tạo đạt chuẩn quốc tế: FIBAA, ASIIN, AUN - QA </a></p>
-          
-        </div>
-        
+    <div class="col-xl-3 col-md-4 col-sm-6 col-12">
+      <div class="mb-3"  style="display: inline-block; font-size: 1.8rem; font-weight: bold; color: rgba(255, 0, 0, 0.793); "> <!-- Container bọc quanh cả biểu tượng và văn bản -->
+        <i class="fas fa-newspaper fas fa-calendar"></i> <!-- Biểu tượng -->
+        <p style="display: inline; margin-left: 5px;">Tin tức</p> <!-- Văn bản -->
+    </div>
+    <div class="card shadow-sm" style="border: 2px solid rgba(0, 0, 0, 0.386);"> 
+      <img src="./image/sk.jpg" alt="">
+      <div class="card-body">
+        <p class="card-text "><a href="./tintuc.html">Lễ công bố Trường Đại học Tôn Đức Thắng đạt chuẩn kiểm định chất lượng cơ sở giáo dục theo tiêu chuẩn FIBAA và thêm 18 chương trình đào tạo đạt chuẩn quốc tế: FIBAA, ASIIN, AUN - QA </a></p>
       </div>
       
-      </div>
+    </div>
+    
+    </div>
 </div>
 <?php require_once("footer.php") ?>
 
