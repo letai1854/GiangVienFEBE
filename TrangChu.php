@@ -90,20 +90,11 @@
                     <li><a style="color: white" class="dropdown-item" href="./themthongtin.php">Thêm thông tin</a></li>
                   </ul>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Cập nhật thông tin
-                  </a>
-                  <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./themgiangvien.php"  >Giảng viên</a></li>
-                    <li><a class="dropdown-item" href="./Thongbaochinhsua.html">Thông báo-Tin tức</a></li>
-                    <li><a class="dropdown-item" href="./suaViecLam.html">Thông tin việc làm</a></li>
-                  </ul>
-                </li>';
+                ';
                 }
                  ?>
                   <li class="nav-item">
-                    <a class="nav-link" >Liên hệ</a>
+                    <a class="nav-link" href="./themgiangvien.php" >Liên hệ</a>
                   </li>
                   
                   <li class="nav-item">
@@ -123,6 +114,16 @@
             <div class="text-center" style="font-size: 1.8rem;font-weight: bold; color:rgba(255, 0, 0, 0.793); "><p>Môn học <br>
             <hr style="color: red; border-top: 2px solid red; font-weight: bold;"> </p></div>
             <div class="row">
+            <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cập nhật thông tin
+                  </a>
+                  <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a class="dropdown-item" href="./themgiangvien.php"  >Giảng viên</a></li>
+                    <li><a class="dropdown-item" href="./Thongbaochinhsua.html">Thông báo-Tin tức</a></li>
+                    <li><a class="dropdown-item" href="./suaViecLam.html">Thông tin việc làm</a></li>
+                  </ul>
+                </li> -->
                 <!-- <div class="col-xl-3 col-md-3 col-sm-12 mb-3 item-subject">
                   <div class="card shadow-sm">
                     <a href="./ChiTietMonHoc.html"><img src="./image/lthdt.png" alt=""></a>
@@ -302,12 +303,12 @@
                 if ($owner) {
                   echo '<div class="col-12 d-flex justify-content-between align-items-center">
                             <div>
-                                <a href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
+                                <a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black; text-decoration: none;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
                                 <p>'.htmlspecialchars($item['day']).'</p>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?id='.$item['id'].'">Sửa</a></button>
-                                <button type="button" class="btn btn-sm ml-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>
+                                <button type="button" class="btn btn-sm mt-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>
                             </div>
                         </div>';
                 }
@@ -374,7 +375,7 @@
                         <img src="'.htmlspecialchars($item['infoImage']).'" alt="">
                         <div class="card-body">
                           <div class="d-flex justify-content-between align-items-center">
-                            <a href="chitietthongtin.php?sid='.$item['id'].'"><small class="text-body-secondary">'.htmlspecialchars($item['infoTitle']).'</small></a>
+                            <a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'"><small class="text-body-secondary">'.htmlspecialchars($item['infoTitle']).'</small></a>
                             <div class="mt-2"><small class="text-body-secondary">' . htmlspecialchars($item['day']) . '</small></div>
                           </div>'
                         ;
@@ -407,7 +408,7 @@
             echo '<div class="card shadow-sm" style="border: 2px solid rgba(0, 0, 0, 0.386);"> 
                   <img src="'.htmlspecialchars($item['infoImage']).'" alt="">
                   <div class="card-body">
-                    <p class="card-text "><a href="chitietthongtin.php?sid='.$item['id'].'">'.htmlspecialchars($item['infoTitle']).'</a></p>';
+                    <p class="card-text "><a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'">'.htmlspecialchars($item['infoTitle']).'</a></p>';
                         
             if ($owner) {
                 echo '<div class="mt-3">'; // Add margin top for button alignment
