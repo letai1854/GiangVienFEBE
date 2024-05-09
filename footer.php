@@ -90,9 +90,7 @@ if(isset($_POST['email']) && isset($_POST['sdt'])){
                 <div class="row">
                     <div class="col-md-6">
                         <p class="font-11 m-0 text-white">
-                            Copyright ©2020 Đại học Tôn Đức Thắng
-                            <br>
-                            Ứng dụng được phát triển bởi Tổ phát triển phần mềm - Trung tâm tin học
+                            Copyright ©2024 52200020_52200045
                         </p>
                     </div>
                 </div>
