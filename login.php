@@ -44,7 +44,7 @@ if (isset($_POST['btnlogin'])) {
         }
         body{
            
-            background-image: url('images/bg_1.avif') ;
+            background-image: url('image/bg_3.jpg') ;
             background-repeat: no-repeat;
             background-size: cover;
         }

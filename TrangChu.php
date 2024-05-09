@@ -25,6 +25,10 @@
   $list_thongbao = ThongTin::getListThongTinByType("thongbao");
   $list_vieclam = ThongTin::getListThongTinByType("vieclam");
   $list_tintuc = ThongTin::getListThongTinByType("tintuc");
+  if(isset($_POST['Delete_thongtin'])){
+    $id=$_POST['Id_thongtin'];
+    $result = ThongTin::deleteThongTin($id);
+  }
 
   
 ?>
@@ -79,11 +83,11 @@
                 </li>
        
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./capnhatthongtin.php">
-                    Thêm thông tin
+                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./themthongtin.php">
+                    Thông tin
                   </a>
                   <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./capnhatthongtin.php">Thông Tin</a></li>
+                    <li><a class="dropdown-item" href="./themthongtin.php">Thêm thông tin</a></li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -267,7 +271,7 @@
                       if($owner)
                       {
                         echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="suamonhoc.php?sid='.$item['subjectCode'].'">Sửa</a></button>
-                        <button type="button" class="btn btn-sm" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['subjectCode']) . '\')">Xóa</button>
+                        <button type="button" class="btn btn-sm" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['subjectCode']) . '\')">Xóa</button>
                         <button type="button" class="btn btn-sm" style="background-color: rgb(32, 115, 40); border-radius: 3px; width:60px">
                         <a style="color: white; text-decoration: none; width:150px"><a style="color: white; text-decoration: none;" href="themTaiLieu.php?sid='.$item['subjectCode'].'">Thêm</a></a>
                         </button>';
@@ -295,10 +299,24 @@
             {
               foreach($list_thongbao as $item)
               {
-                echo '<div class="col-12">
-                         <h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6>
-                      <p>'.htmlspecialchars($item['day']).'</p>
-                      </div>';
+                if ($owner) {
+                  echo '<div class="col-12 d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
+                                <p>'.htmlspecialchars($item['day']).'</p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?id='.$item['id'].'">Sửa</a></button>
+                                <button type="button" class="btn btn-sm ml-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>
+                            </div>
+                        </div>';
+                }
+                else {
+                  echo '<div class="col-12">
+                          <a href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
+                          <p>'.htmlspecialchars($item['day']).'</p>
+                        </div>';
+                }
               }
             }
           }
@@ -363,8 +381,8 @@
 
               if ($owner) {
                 echo '<div class="mt-3">'; // Add margin top for button alignment
-                echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?sid='.$item['id'].'">Sửa</a></button>
-                      <button type="button" class="btn btn-sm ml-2" style="background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_btn(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>';
+                echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?id='.$item['id'].'">Sửa</a></button>
+                      <button type="button" class="btn btn-sm ml-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>';
                 echo '</div>'; // Close the div for button alignment
               }
               echo '</div>
@@ -382,13 +400,31 @@
         <i class="fas fa-newspaper fas fa-calendar"></i> <!-- Biểu tượng -->
         <p style="display: inline; margin-left: 5px;">Tin tức</p> <!-- Văn bản -->
     </div>
-    <div class="card shadow-sm" style="border: 2px solid rgba(0, 0, 0, 0.386);"> 
-      <img src="./image/sk.jpg" alt="">
-      <div class="card-body">
-        <p class="card-text "><a href="./tintuc.html">Lễ công bố Trường Đại học Tôn Đức Thắng đạt chuẩn kiểm định chất lượng cơ sở giáo dục theo tiêu chuẩn FIBAA và thêm 18 chương trình đào tạo đạt chuẩn quốc tế: FIBAA, ASIIN, AUN - QA </a></p>
-      </div>
-      
-    </div>
+    <?php
+      if (isset($list_tintuc)) {
+        if (is_array(($list_tintuc))) {
+          foreach ($list_tintuc as $item) {
+            echo '<div class="card shadow-sm" style="border: 2px solid rgba(0, 0, 0, 0.386);"> 
+                  <img src="'.htmlspecialchars($item['infoImage']).'" alt="">
+                  <div class="card-body">
+                    <p class="card-text "><a href="chitietthongtin.php?sid='.$item['id'].'">'.htmlspecialchars($item['infoTitle']).'</a></p>';
+                        
+            if ($owner) {
+                echo '<div class="mt-3">'; // Add margin top for button alignment
+                echo '<button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?id='.$item['id'].'">Sửa</a></button>
+                        <button type="button" class="btn btn-sm ml-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>';
+                echo '</div>'; // Close the div for button alignment
+            }
+
+            echo '</div>'; // Close the card-body div
+            echo '</div>'; // Close the card div
+
+          }
+        }
+      }
+    
+    ?>
+    
     
     </div>
 </div>
@@ -410,6 +446,28 @@
             var btn = document.createElement("button");
             btn.setAttribute("type", "submit");
             btn.setAttribute("name", "Delete");
+            form.appendChild(id);
+            form.appendChild(btn);
+            document.getElementsByTagName("body")[0]
+                .appendChild(form);
+            btn.click();
+        }
+    }
+    function delete_thongtin(id) {
+      if (confirm('Bạn có chắc muốn xóa thông báo') == true) {
+            var idstr = id.toString();
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "");
+
+            var id = document.createElement("input");
+            id.setAttribute("type", "text");
+            id.setAttribute("name", "Id_thongtin");
+            id.setAttribute("value", '' + idstr);
+
+            var btn = document.createElement("button");
+            btn.setAttribute("type", "submit");
+            btn.setAttribute("name", "Delete_thongtin");
             form.appendChild(id);
             form.appendChild(btn);
             document.getElementsByTagName("body")[0]
