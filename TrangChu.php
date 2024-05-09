@@ -314,7 +314,7 @@
                 }
                 else {
                   echo '<div class="col-12">
-                          <a href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
+                          <a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
                           <p>'.htmlspecialchars($item['day']).'</p>
                         </div>';
                 }
