@@ -29,15 +29,28 @@
             $result=$db->query_execute($sql);
             return $result;
         }
-        public static function upadteThongTin($id, $infoTitle, $date, $infoImage, $infoType, $infoContents) {
+        public static function updateThongTin($id, $infoTitle, $date, $infoImage, $infoType, $infoContents) {
             $pic_temp = $infoImage['tmp_name'];
             $user_pic = $infoImage['name'];
             $picpath = "upload/" . $user_pic;
             if (move_uploaded_file($pic_temp, $picpath) == false) {
                 return false;
             }
-            $db = new Db();
-            $sql = "UPDATE `News` SET infoTitle ='$infoTitle', day ='[value-3]', infoImage = '[value-4]', infoType = '[value-5]', infoContents ='[value-6]' WHERE id = $id";
+            try{
+                $db = new Db();
+                $sql = "UPDATE News SET infoTitle ='$infoTitle', day = '$date', infoImage = '$picpath', infoType = '$infoType', infoContents ='$infoContents' WHERE id = $id";
+                $db->query_execute(($sql));
+                return true;
+            }
+            catch(PDOException $e){
+                return false;
+            }
+        }
+        public static function deleteThongTin($id) {
+            $db= new Db();
+            $sql = "DELETE  FROM News where id = $id";
+            $result=$db->query_execute($sql);
+            return $result;
         }
         public static function getListThongTinByType($infoType) {
             $db= new Db();

@@ -2,32 +2,24 @@
     require_once("entities/thongtin.class.php");
 
     ob_start();
-    $id = $_GET['id'];
-    $thongTin = ThongTin::getThongTinById($id);
-
-    $infoTitle = $thongTin[0]['infoTitle'];
-    $infoType = $thongTin[0]['infoType'];
-    $infoContents = $thongTin[0]['infoContents'];
-
-
-    if (isset($_POST['btnSubmit'])) { 
+    if (isset($_POST['btnSubmit'])) {
         $infoTitle = $_POST['title'];
         $date = date('Y-m-d');
         $infoImage = $_FILES['image'];
         $infoType = $_POST['infotype'];
         $infoContent = $_POST['content'];
 
-        $result = ThongTin::updateThongTin($id, $infoTitle, $date, $infoImage, $infoType, $infoContent);
+        $result = ThongTin::saveThongTin($infoTitle, $date, $infoImage, $infoType, $infoContent);
         if ($result == true)
         {
-            echo "<script>alert('Sửa thành công!');</script>";
+            echo "<script>alert('Thêm thành công!');</script>";
             header("Location: TrangChu.php");
             ob_end_flush();
             exit();
         } 
         else 
         {
-            echo "<script>alert('Sửa thất bại!');</script>";
+            echo "<script>alert('Thêm thất bại!');</script>";
         }
     }
 ?>
@@ -71,7 +63,7 @@
             </div>
       </div>
       <div class="titleh1" style="text-align:center">
-        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">SỬA THÔNG BÁO</h1>
+        <h1 class=" " style="color: rgba(4, 17, 255, 0.966);">THÊM THÔNG BÁO</h1>
       </div>
       <hr style="color: red; border-top: 2px solid red; font-weight: bold;"> </p></div>
    <div class="container ct">
@@ -83,16 +75,14 @@
             <form action="#" method="post" class="formSubject" enctype="multipart/form-data" onsubmit="return validateForm()">
               <div class="form-group">
                     <label for="heading" >Tiêu đề:</label>
-                    <input type="text" id="title" name = "title" value="<?php
-                        echo $infoTitle;
-                    ?>"><br>
+                    <input type="text" id="title" name = "title"><br>
               </div>
               <div class="form-group">
                 <label for="job-type" style="margin-right: 26px;" >Loại:</label>
                 <select id="job-type" name="infotype">
-                <option value="vieclam" <?php echo ($infoType == 'vieclam') ? 'selected' : ''; ?>>Việc làm</option>
-                <option value="thongbao" <?php echo ($infoType == 'thongbao') ? 'selected' : ''; ?>>Thông báo</option>
-                <option value="tintuc" <?php echo ($infoType == 'tintuc') ? 'selected' : ''; ?>>Tin tức</option>
+                    <option value="vieclam">Việc làm</option>
+                    <option value="thongbao">Thông báo</option>
+                    <option value="tintuc">Tin tức</option>
                 </select>
               </div>
               <div class="form-group">
@@ -100,7 +90,7 @@
                     <input type="file" name="image" id="txt_image" accept=".PNG,.GIF,.JPG,.JPEG,.jpg,.png,.jpeg">	
               </div>
               <div class="form-group">
-                    <textarea id="content" name="content" placeholder="Nhập nội dung thông tin" style="width:700px"><?php echo $infoContents; ?></textarea>
+                    <textarea id="content" name="content" placeholder="Nhập nội dung thông tin" style="width:700px"></textarea>
               </div>              
               <div class="form-group">
                 <button type="submit" class="btn btn-primary" name="btnSubmit">Xác nhận</button>
