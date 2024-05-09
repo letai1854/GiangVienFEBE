@@ -79,15 +79,15 @@
                  <?php
                 if($owner){
                   echo' <li class="nav-item">
-                  <a class="nav-link" href="./themmonhoc.php" >Thêm môn học</a>
+                  <a class="nav-link" href="./themmonhoc.php" style="color: white">Thêm môn học</a>
                 </li>
        
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./themthongtin.php">
+                  <a style="color: white" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="./themthongtin.php">
                     Thông tin
                   </a>
                   <ul style="background-color: rgba(4, 49, 252, 0.944);" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a class="dropdown-item" href="./themthongtin.php">Thêm thông tin</a></li>
+                    <li><a style="color: white" class="dropdown-item" href="./themthongtin.php">Thêm thông tin</a></li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
