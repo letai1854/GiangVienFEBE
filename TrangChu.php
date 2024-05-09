@@ -292,7 +292,7 @@
           <i class="fas fa-newspaper"></i> <!-- Biểu tượng -->
           <p style="display: inline; margin-left: 5px;">Thông báo</p> <!-- Văn bản -->
       </div>
-      <div class="row newspaper" style="margin-top: 14px;">
+      <div class="row newspaper" style="margin-top: 14px; width:500px; padding-bottom:4px;">
         <?php
           if(isset($list_thongbao))
           {
@@ -301,20 +301,20 @@
               foreach($list_thongbao as $item)
               {
                 if ($owner) {
-                  echo '<div class="col-12 d-flex justify-content-between align-items-center">
+                  echo '<div class="col-12  justify-content-between align-items-center">
                             <div>
                                 <a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black; text-decoration: none;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
                                 <p>'.htmlspecialchars($item['day']).'</p>
                             </div>
-                            <div>
+                            <div >
                                 <button type="button" class="btn btn-sm" style="background-color: rgb(213, 198, 101); border-radius: 3px; width:50px" name="deletebtn"><a style="color: white; text-decoration: none;" href="capnhatthongtin.php?id='.$item['id'].'">Sửa</a></button>
-                                <button type="button" class="btn btn-sm mt-2" style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>
+                                <button type="button" class="btn btn-sm " style="color: white; background-color: rgb(36, 36, 153); border-radius: 3px; width:50px" name="updatebtn" onclick="delete_thongtin(\'' . htmlspecialchars($item['id']) . '\')">Xóa</button>
                             </div>
                         </div>';
                 }
                 else {
                   echo '<div class="col-12">
-                          <a style="text-decoration: none;" href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
+                          <a href="chitietthongtin.php?sid='.$item['id'].'"><h6 style="color: black;">'.htmlspecialchars($item['infoTitle']).'</h6></a>
                           <p>'.htmlspecialchars($item['day']).'</p>
                         </div>';
                 }
